@@ -14,48 +14,18 @@ end
 
 local ScreenGui = Instance.new("ScreenGui")
 local Scroll = Instance.new("ScrollingFrame")
-local TitleBar = Instance.new("Frame")
-local ClearButton = Instance.new("TextButton")
-
 ScreenGui.Name = "WhisperSpy"
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
--- Scrollable Frame
 Scroll.Name = "Scroll"
 Scroll.Parent = ScreenGui
 Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
-Scroll.BackgroundTransparency = 0.9
-Scroll.Position = UDim2.new(0.0159817338, 0, 0.131728053, 0)
+Scroll.BackgroundTransparency = 0.89999997615814
+Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
 Scroll.Size = UDim2.new(0, 405, 0, 222)
+Scroll.CanvasPosition = Vector2.new(0, 484)
 Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
-
--- Title Bar (Header)
-TitleBar.Name = "TitleBar"
-TitleBar.Parent = ScreenGui
-TitleBar.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-TitleBar.Position = UDim2.new(0.0159817338, 0, 0, 0)
-TitleBar.Size = UDim2.new(0, 405, 0, 30)
-
-local TitleLabel = Instance.new("TextLabel")
-TitleLabel.Parent = TitleBar
-TitleLabel.Size = UDim2.new(1, 0, 1, 0)
-TitleLabel.Text = "Whisper Spy - Logs"
-TitleLabel.TextColor3 = Color3.new(1, 1, 1)
-TitleLabel.TextScaled = true
-TitleLabel.BackgroundTransparency = 1
-
--- Clear Button
-ClearButton.Name = "ClearButton"
-ClearButton.Parent = ScreenGui
-ClearButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Red button
-ClearButton.Size = UDim2.new(0, 100, 0, 30)
-ClearButton.Position = UDim2.new(0, 305, 0.631728053, 0)
-ClearButton.Text = "Clear"
-ClearButton.TextColor3 = Color3.new(1, 1, 1)
-ClearButton.Font = Enum.Font.SourceSansBold
-ClearButton.TextSize = 18
 
 -- Create draggable functionality
 local dragging = false
@@ -146,26 +116,15 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         end
     end)
 
-    -- Listen for +clear command
+    -- Listen for /clear command
     plr.Chatted:Connect(function(msg)
-        if msg == "+clear" then
+        if msg == "/clear" then  -- Changed +clear to /clear
             for i, v in pairs(Scroll:GetChildren()) do
                 if v:IsA("TextLabel") then
                     prevOutputPos = 0
                     v:Destroy()
                     textnumber = 1
                 end
-            end
-        end
-    end)
-
-    -- Clear Button function
-    ClearButton.MouseButton1Click:Connect(function()
-        for i, v in pairs(Scroll:GetChildren()) do
-            if v:IsA("TextLabel") then
-                prevOutputPos = 0
-                v:Destroy()
-                textnumber = 1
             end
         end
     end)
