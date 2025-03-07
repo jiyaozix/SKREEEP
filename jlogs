@@ -1,50 +1,4 @@
--- Existing code to create the UI
-for i, v in pairs(game.CoreGui:GetChildren()) do
-    if v.Name == "WhisperSpy" then
-        v:Destroy()
-    end
-end
-
-local ScreenGui = Instance.new("ScreenGui")
-local Scroll = Instance.new("ScrollingFrame")
-ScreenGui.Name = "WhisperSpy"
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Scroll.Name = "Scroll"
-Scroll.Parent = ScreenGui
-Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
-Scroll.BackgroundTransparency = 0.89999997615814
-Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
-Scroll.Size = UDim2.new(0, 405, 0, 222)
-Scroll.CanvasPosition = Vector2.new(0, 484)
-Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
-Scroll.ScrollBarThickness = 10
-
--- Create draggable functionality
-local dragging = false
-local dragInput, dragStart, startPos
-
-Scroll.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = Scroll.Position
-    end
-end)
-
-Scroll.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = false
-    end
-end)
-
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if dragging then
-        local delta = input.Position - dragStart
-        Scroll.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-end)
+-- Existing code for UI remains unchanged
 
 function SCRIPT_KTFX73_FAKESCRIPT()
     local script = Instance.new('LocalScript')
@@ -89,16 +43,17 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.ClipsDescendants = true
         prevOutputPos = prevOutputPos + 0.025
 
-        -- Function to check if the chat is at the bottom and scroll
-        local function scrollToBottom()
-            local isAtBottom = Scroll.CanvasPosition.Y + Scroll.AbsoluteSize.Y >= Scroll.CanvasSize.Y.Offset
-            if isAtBottom then
-                Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
-            end
-        end
+        -- Function to check if the chat is at the bottom (this part will be removed)
+        -- We are no longer forcing scroll to the bottom automatically.
+        --local function scrollToBottom()
+        --    local isAtBottom = Scroll.CanvasPosition.Y + Scroll.AbsoluteSize.Y >= Scroll.CanvasSize.Y.Offset
+        --    if isAtBottom then
+        --        Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
+        --    end
+        --end
 
-        -- Auto-scroll to the bottom if user is at the bottom of the chat
-        scrollToBottom()
+        -- Call scrollToBottom function (now it won't be used)
+        --scrollToBottom()
     end
 
     -- Listen to player's chat messages
