@@ -1,4 +1,10 @@
--- Whisper Spy UI Script
+--[[ 
+Made by dollar#0007
+
+Logs all whispers and hidden chats with a UI
+Usage: +w, +e, +t, +team, +console, +whisper.
++clear - clears the text in the GUI because I'm lazy to make it auto-scroll
+--]]
 
 for i, v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "WhisperSpy" then
@@ -16,15 +22,10 @@ Scroll.Parent = ScreenGui
 Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
-
--- Larger Box (Increased Size)
-Scroll.Size = UDim2.new(0, 600, 0, 500)  -- Width = 600, Height = 500 (increased height)
-Scroll.CanvasPosition = Vector2.new(0, 0)
+Scroll.Size = UDim2.new(0, 405, 0, 222)
+Scroll.CanvasPosition = Vector2.new(0, 484)
 Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
-
--- Make the scroll bar always visible when content exceeds
-Scroll.ScrollBarVisibility = Enum.ScrollBarVisibility.Auto
 
 -- Create draggable functionality
 local dragging = false
@@ -65,6 +66,7 @@ function SCRIPT_KTFX73_FAKESCRIPT()
     -- Output message function
     function output(plr, msg)
         local colour = Color3.fromRGB(255, 255, 255)
+        local labels = Scroll:GetChildren()
 
         -- Check for different command types (whisper changes color)
         if string.sub(msg, 1, 2) == "+e" or string.sub(msg, 1, 2) == "+w" or string.sub(msg, 1, 2) == "+t" or string.sub(msg, 1, 8) == "+console" or string.sub(msg, 1, 5) == "+team" then
@@ -80,8 +82,8 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.Name = textnumber
         textnumber = textnumber + 1
         o.Text = plr.Name .. ": " .. msg
-        o.Size = UDim2.new(0.95, 0, 0, 30)  -- Set a fixed height for each message
-        o.Position = UDim2.new(0, 0, 0, prevOutputPos)  -- Corrected position logic
+        o.Size = UDim2.new(0.95, 0, .02, 0)
+        o.Position = UDim2.new(0, 0, .02 + prevOutputPos, 0)
         o.Font = Enum.Font.SourceSansBold
         o.TextColor3 = colour
         o.TextStrokeTransparency = 0
@@ -89,15 +91,10 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BackgroundColor3 = Color3.new(0, 0, 0)
         o.BorderSizePixel = 0
         o.BorderColor3 = Color3.new(0, 0, 0)
-        o.FontSize = Enum.FontSize.Size14  -- Set text size to be smaller
+        o.FontSize = "Size14"
         o.TextXAlignment = Enum.TextXAlignment.Left
-        o.TextYAlignment = Enum.TextYAlignment.Top
         o.ClipsDescendants = true
-        prevOutputPos = prevOutputPos + 30  -- Increase spacing for each message
-
-        -- Dynamically adjust CanvasSize after each message to create infinite scroll
-        local newHeight = prevOutputPos
-        Scroll.CanvasSize = UDim2.new(0, 0, 0, newHeight)
+        prevOutputPos = prevOutputPos + 0.025
 
         -- Auto-scroll to the bottom every time a message is added
         Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
