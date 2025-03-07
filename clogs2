@@ -56,10 +56,12 @@ function SCRIPT_KTFX73_FAKESCRIPT()
             local receiver = parts[2] -- second part is the receiver
             local whisperMessage = table.concat(parts, " ", 3) -- the rest is the message
 
-            -- Format: sender_username > recipient_username message
-            msg = plr.Name .. " > " .. receiver .. ": " .. whisperMessage
+            -- Format: [sender_username] to [recipient_username]: message
+            msg = "[" .. plr.Name .. "] to [" .. receiver .. "]: " .. whisperMessage
         else
             colour = Color3.fromRGB(255, 255, 255) -- default white for regular chat
+            -- Format: [sender_username]: message
+            msg = "[" .. plr.Name .. "]: " .. msg
         end
 
         -- Create new label for the message
