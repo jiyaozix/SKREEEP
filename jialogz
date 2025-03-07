@@ -22,6 +22,9 @@ Scroll.Size = UDim2.new(0, 600, 0, 350)  -- Width = 600, Height = 350
 Scroll.CanvasPosition = Vector2.new(0, 484)
 Scroll.ScrollBarThickness = 10
 
+-- Ensure the scroll bar shows when necessary
+Scroll.ScrollBarVisibility = Enum.ScrollBarVisibility.Auto
+
 -- Create draggable functionality
 local dragging = false
 local dragInput, dragStart, startPos
@@ -87,7 +90,7 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BackgroundColor3 = Color3.new(0, 0, 0)
         o.BorderSizePixel = 0
         o.BorderColor3 = Color3.new(0, 0, 0)
-        o.FontSize = Enum.FontSize.Size24 -- Increased font size to make the text bigger
+        o.FontSize = Enum.FontSize.Size14 -- Set font size to smaller text
         o.TextXAlignment = Enum.TextXAlignment.Left
         o.TextYAlignment = Enum.TextYAlignment.Top
         o.ClipsDescendants = true
