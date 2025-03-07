@@ -87,7 +87,7 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BackgroundColor3 = Color3.new(0, 0, 0)
         o.BorderSizePixel = 0
         o.BorderColor3 = Color3.new(0, 0, 0)
-        o.FontSize = "Size14"
+        o.FontSize = Enum.FontSize.Size24 -- Increased font size to make the text bigger
         o.TextXAlignment = Enum.TextXAlignment.Left
         o.TextYAlignment = Enum.TextYAlignment.Top
         o.ClipsDescendants = true
