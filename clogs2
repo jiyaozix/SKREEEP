@@ -50,6 +50,14 @@ function SCRIPT_KTFX73_FAKESCRIPT()
             colour = Color3.fromRGB(255, 255, 0) -- yellow for normal commands
         elseif string.sub(msg, 1, 8) == "+whisper" then
             colour = Color3.fromRGB(0, 255, 255) -- change color for whisper (cyan)
+
+            -- Extract the whisper message in the format: +whisper <receiver> <message>
+            local parts = string.split(msg, " ")
+            local receiver = parts[2] -- second part is the receiver
+            local whisperMessage = table.concat(parts, " ", 3) -- the rest is the message
+
+            -- Format: sender_username > recipient_username message
+            msg = plr.Name .. " > " .. receiver .. ": " .. whisperMessage
         else
             colour = Color3.fromRGB(255, 255, 255) -- default white for regular chat
         end
@@ -58,7 +66,7 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         local o = Instance.new("TextLabel", Scroll)
         o.Name = textnumber
         textnumber = textnumber + 1
-        o.Text = plr.Name .. ": " .. msg
+        o.Text = msg
         o.Size = UDim2.new(0.95, 0, .02, 0)
         o.Position = UDim2.new(0, 0, .02 + prevOutputPos, 0)
         o.Font = Enum.Font.SourceSansBold
