@@ -22,7 +22,10 @@ Scroll.Parent = ScreenGui
 Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
-Scroll.Size = UDim2.new(0, 405, 0, 222)
+
+-- Increased Size for the window
+Scroll.Size = UDim2.new(0, 600, 0, 350)  -- Width = 600, Height = 350
+
 Scroll.CanvasPosition = Vector2.new(0, 484)
 Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
