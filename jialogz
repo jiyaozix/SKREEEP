@@ -1,35 +1,24 @@
 -- Whisper Spy UI Script
--- This script logs all whispers and hidden chats with a UI.
-
--- Destroy any existing WhisperSpy UI elements
 for i, v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "WhisperSpy" then
         v:Destroy()
     end
 end
-
--- Create the ScreenGui and ScrollFrame
 local ScreenGui = Instance.new("ScreenGui")
 local Scroll = Instance.new("ScrollingFrame")
 ScreenGui.Name = "WhisperSpy"
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 Scroll.Name = "Scroll"
 Scroll.Parent = ScreenGui
 Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
-
--- Increase the size of the ScrollFrame window
-Scroll.Size = UDim2.new(0, 600, 0, 350)  -- Width = 600, Height = 350
+Scroll.Size = UDim2.new(0, 600, 0, 350)
 Scroll.CanvasPosition = Vector2.new(0, 484)
 Scroll.ScrollBarThickness = 10
-
--- Make the ScrollFrame draggable
 local dragging = false
 local dragInput, dragStart, startPos
-
 Scroll.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -38,35 +27,26 @@ Scroll.InputBegan:Connect(function(input, gameProcessed)
         startPos = Scroll.Position
     end
 end)
-
 Scroll.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = false
     end
 end)
-
 game:GetService("UserInputService").InputChanged:Connect(function(input)
     if dragging then
         local delta = input.Position - dragStart
         Scroll.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
-
--- Function to display chat messages in the scroll area
 function output(plr, msg)
-    local colour = Color3.fromRGB(255, 255, 255)  -- Default white color for regular messages
-    local labels = Scroll:GetChildren()
-
-    -- Handle command types to change message color
+    local colour = Color3.fromRGB(255, 255, 255)
     if string.sub(msg, 1, 2) == "+e" or string.sub(msg, 1, 2) == "+w" or string.sub(msg, 1, 2) == "+t" or string.sub(msg, 1, 8) == "+console" or string.sub(msg, 1, 5) == "+team" then
-        colour = Color3.fromRGB(255, 255, 0) -- Yellow for normal commands
+        colour = Color3.fromRGB(255, 255, 0)
     elseif string.sub(msg, 1, 8) == "+whisper" then
-        colour = Color3.fromRGB(0, 255, 255) -- Cyan for whispers
+        colour = Color3.fromRGB(0, 255, 255)
     end
-
-    -- Create a new label for the message
     local o = Instance.new("TextLabel", Scroll)
-    o.Name = "Message" .. tick()  -- Unique name for each message
+    o.Name = "Message" .. tick()
     o.Text = plr.Name .. ": " .. msg
     o.Size = UDim2.new(0.95, 0, .02, 0)
     o.Position = UDim2.new(0, 0, .02 + prevOutputPos, 0)
@@ -78,27 +58,18 @@ function output(plr, msg)
     o.TextXAlignment = Enum.TextXAlignment.Left
     o.ClipsDescendants = true
     prevOutputPos = prevOutputPos + 0.025
-
-    -- Dynamically adjust CanvasSize after each message
     local newHeight = prevOutputPos * 30
     Scroll.CanvasSize = UDim2.new(0, 0, 0, newHeight)
-
-    -- Auto-scroll to the bottom
     Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
 end
-
--- Listen for chat messages from players
 local prevOutputPos = 0
 local textnumber = 1
 local maxMessages = 100
-
 for i, v in pairs(game.Players:GetChildren()) do
     v.Chatted:Connect(function(msg)
         output(v, msg)
     end)
 end
-
--- Listen for new players joining and their chat messages
 game.Players.ChildAdded:Connect(function(plr)
     if plr:IsA("Player") then
         plr.Chatted:Connect(function(msg)
@@ -106,8 +77,6 @@ game.Players.ChildAdded:Connect(function(plr)
         end)
     end
 end)
-
--- Listen for the +clear command to clear the chat log
 game.Players.LocalPlayer.Chatted:Connect(function(msg)
     if msg == "+clear" then
         for i, v in pairs(Scroll:GetChildren()) do
