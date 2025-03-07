@@ -22,11 +22,9 @@ Scroll.Parent = ScreenGui
 Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
-
--- Increased Size for the window
-Scroll.Size = UDim2.new(0, 600, 0, 350)  -- Width = 600, Height = 350
-
+Scroll.Size = UDim2.new(0, 405, 0, 222)
 Scroll.CanvasPosition = Vector2.new(0, 484)
+Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
 
 -- Create draggable functionality
@@ -64,7 +62,6 @@ function SCRIPT_KTFX73_FAKESCRIPT()
 
     local textnumber = 1
     local prevOutputPos = 0
-    local maxMessages = 100 -- Max messages before scroll
 
     -- Output message function
     function output(plr, msg)
@@ -98,10 +95,6 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.TextXAlignment = Enum.TextXAlignment.Left
         o.ClipsDescendants = true
         prevOutputPos = prevOutputPos + 0.025
-
-        -- Adjust CanvasSize dynamically
-        local canvasHeight = prevOutputPos * 30  -- Adjust the canvas height based on number of messages
-        Scroll.CanvasSize = UDim2.new(0, 0, 0, canvasHeight)
 
         -- Auto-scroll to the bottom every time a message is added
         Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
