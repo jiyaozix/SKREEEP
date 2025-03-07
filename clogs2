@@ -4,20 +4,25 @@ function output(plr, msg)
     local labels = Scroll:GetChildren()
     local receiver = ""  -- Default value for normal messages
 
-    -- Check for whisper and extract the receiver's name
+    -- Check if message is a whisper
     if string.sub(msg, 1, 8) == "+whisper" then
+        -- Extract the receiver's name and message
         local receiverStart = string.find(msg, " ") + 1
         local receiverEnd = string.find(msg, " ", receiverStart)
+        
+        -- If a receiver name is found
         if receiverEnd then
-            receiver = string.sub(msg, receiverStart, receiverEnd - 1)
-            msg = string.sub(msg, receiverEnd + 1)  -- Removing the receiver from the message
+            receiver = string.sub(msg, receiverStart, receiverEnd - 1)  -- Extract receiver's username
+            msg = string.sub(msg, receiverEnd + 1)  -- Extract the message after the receiver's name
         else
-            receiver = string.sub(msg, receiverStart)  -- Only receiver name, no message
-            msg = ""
+            -- If no message content after the receiver, treat it as an empty message
+            receiver = string.sub(msg, receiverStart)  -- Extract receiver's username
+            msg = ""  -- No message content
         end
-        colour = Color3.fromRGB(0, 255, 255) -- Change color for whisper (cyan)
+
+        colour = Color3.fromRGB(0, 255, 255)  -- Change color for whispers (cyan)
     elseif string.sub(msg, 1, 2) == "+e" or string.sub(msg, 1, 2) == "+w" or string.sub(msg, 1, 2) == "+t" or string.sub(msg, 1, 8) == "+console" or string.sub(msg, 1, 5) == "+team" then
-        colour = Color3.fromRGB(255, 255, 0) -- Yellow for normal commands
+        colour = Color3.fromRGB(255, 255, 0)  -- Yellow for normal commands
     end
 
     -- Create new label for the message
@@ -25,8 +30,13 @@ function output(plr, msg)
     o.Name = textnumber
     textnumber = textnumber + 1
 
-    -- Update text to show the format: [username] to [receiver username]: [message]
-    o.Text = plr.Name .. " to " .. receiver .. ": " .. msg
+    -- Update text to show the format: [sender username] to [receiver username]: [message]
+    if receiver ~= "" then
+        o.Text = plr.Name .. " to " .. receiver .. ": " .. msg  -- Whisper format
+    else
+        o.Text = plr.Name .. ": " .. msg  -- Normal chat format
+    end
+
     o.Size = UDim2.new(0.95, 0, .02, 0)
     o.Position = UDim2.new(0, 0, .02 + prevOutputPos, 0)
     o.Font = Enum.Font.SourceSansBold
