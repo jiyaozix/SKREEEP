@@ -17,8 +17,8 @@ Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
 
--- Increased Size for the window (Larger Box)
-Scroll.Size = UDim2.new(0, 600, 0, 400)  -- Width = 600, Height = 400 (adjusted height)
+-- Larger Box (Increased Size)
+Scroll.Size = UDim2.new(0, 600, 0, 500)  -- Width = 600, Height = 500 (increased height)
 Scroll.CanvasPosition = Vector2.new(0, 0)
 Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
