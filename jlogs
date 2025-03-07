@@ -116,9 +116,9 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         end
     end)
 
-    -- Listen for +clear command
+    -- Listen for /clear command
     plr.Chatted:Connect(function(msg)
-        if msg == "+clear" then
+        if msg == "/clear" then  -- Changed +clear to /clear
             for i, v in pairs(Scroll:GetChildren()) do
                 if v:IsA("TextLabel") then
                     prevOutputPos = 0
