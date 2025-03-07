@@ -65,7 +65,6 @@ function SCRIPT_KTFX73_FAKESCRIPT()
     -- Output message function
     function output(plr, msg)
         local colour = Color3.fromRGB(255, 255, 255)
-        local labels = Scroll:GetChildren()
 
         -- Check for different command types (whisper changes color)
         if string.sub(msg, 1, 2) == "+e" or string.sub(msg, 1, 2) == "+w" or string.sub(msg, 1, 2) == "+t" or string.sub(msg, 1, 8) == "+console" or string.sub(msg, 1, 5) == "+team" then
@@ -78,11 +77,11 @@ function SCRIPT_KTFX73_FAKESCRIPT()
 
         -- Create new label for the message
         local o = Instance.new("TextLabel", Scroll)
-        o.Name = textnumber
+        o.Name = "Message" .. textnumber
         textnumber = textnumber + 1
         o.Text = plr.Name .. ": " .. msg
-        o.Size = UDim2.new(0.95, 0, .05, 0)  -- Increased size for each message
-        o.Position = UDim2.new(0, 0, .05 + prevOutputPos, 0)  -- Adjust position for better spacing
+        o.Size = UDim2.new(0.95, 0, 0, 30)  -- Set a fixed height for each message
+        o.Position = UDim2.new(0, 0, 0, prevOutputPos)  -- Corrected position logic
         o.Font = Enum.Font.SourceSansBold
         o.TextColor3 = colour
         o.TextStrokeTransparency = 0
@@ -92,11 +91,12 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BorderColor3 = Color3.new(0, 0, 0)
         o.FontSize = Enum.FontSize.Size14  -- Set text size to be smaller
         o.TextXAlignment = Enum.TextXAlignment.Left
+        o.TextYAlignment = Enum.TextYAlignment.Top
         o.ClipsDescendants = true
-        prevOutputPos = prevOutputPos + 0.05  -- Adjust spacing between messages
+        prevOutputPos = prevOutputPos + 30  -- Increase spacing for each message
 
         -- Dynamically adjust CanvasSize after each message to create infinite scroll
-        local newHeight = prevOutputPos * 30  -- Adjust multiplier for proper spacing
+        local newHeight = prevOutputPos
         Scroll.CanvasSize = UDim2.new(0, 0, 0, newHeight)
 
         -- Auto-scroll to the bottom every time a message is added
