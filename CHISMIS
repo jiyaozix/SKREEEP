@@ -95,10 +95,16 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.ClipsDescendants = true
         prevOutputPos = prevOutputPos + 0.025
 
+        -- Update the CanvasSize to fit all text
+        Scroll.CanvasSize = UDim2.new(0, 0, 0, prevOutputPos * 20)  -- Ensure the canvas adjusts dynamically with new content
+
         -- Auto-scroll to the bottom every time a message is added
-        -- Update the canvas position smoothly
         local targetPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
-        Scroll:TweenCanvasPosition(targetPosition, Enum.EasingDirection.Out, Enum.EasingStyle.Quint, 0.2, true)
+        
+        -- If the user hasn't manually scrolled up, auto-scroll the frame
+        if Scroll.CanvasPosition.Y == Scroll.CanvasSize.Y.Offset - Scroll.AbsoluteSize.Y then
+            Scroll.CanvasPosition = targetPosition
+        end
     end
 
     -- Listen to player's chat messages
