@@ -78,8 +78,8 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.Name = textnumber
         textnumber = textnumber + 1
         o.Text = plr.Name .. ": " .. msg
-        o.Size = UDim2.new(0.95, 0, .05, 0) -- Increased line height for spacing
-        o.Position = UDim2.new(0, 0, .05 + prevOutputPos, 0)
+        o.Size = UDim2.new(0.95, 0, .08, 0) -- Increased line height for better spacing
+        o.Position = UDim2.new(0, 0, .08 + prevOutputPos, 0) -- Adjust position for better spacing
         o.Font = Enum.Font.Gotham -- Changed font to Gotham for better readability
         o.TextColor3 = colour
         o.TextStrokeTransparency = 0
@@ -89,9 +89,9 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BorderColor3 = Color3.new(0, 0, 0)
         o.FontSize = "Size14"
         o.TextXAlignment = Enum.TextXAlignment.Left
-        o.TextYAlignment = Enum.TextYAlignment.Top -- Adjust alignment for better appearance
+        o.TextYAlignment = Enum.TextYAlignment.Top
         o.ClipsDescendants = true
-        prevOutputPos = prevOutputPos + 0.065 -- Increased spacing between messages
+        prevOutputPos = prevOutputPos + 0.1 -- Increased spacing between messages
 
         -- Dynamically adjust CanvasSize after each message
         local newHeight = prevOutputPos * 30 -- Adjust this multiplier if needed
