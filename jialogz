@@ -119,5 +119,3 @@ game.Players.LocalPlayer.Chatted:Connect(function(msg)
         end
     end
 end)
-
--- Optional: You can add additional features, such as a button to clear chat manually.
