@@ -19,7 +19,7 @@ Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
 
 -- Increased Size for the window (Larger Box)
 Scroll.Size = UDim2.new(0, 600, 0, 400)  -- Width = 600, Height = 400 (adjusted height)
-Scroll.CanvasPosition = Vector2.new(0, 484)
+Scroll.CanvasPosition = Vector2.new(0, 0)
 Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
 
@@ -77,7 +77,7 @@ function SCRIPT_KTFX73_FAKESCRIPT()
 
         -- Create new label for the message
         local o = Instance.new("TextLabel", Scroll)
-        o.Name = "Message" .. textnumber
+        o.Name = textnumber
         textnumber = textnumber + 1
         o.Text = plr.Name .. ": " .. msg
         o.Size = UDim2.new(0.95, 0, 0, 30)  -- Set a fixed height for each message
