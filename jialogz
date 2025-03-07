@@ -1,10 +1,4 @@
---[[ 
-Made by dollar#0007
-
-Logs all whispers and hidden chats with a UI
-Usage: +w, +e, +t, +team, +console, +whisper.
-+clear - clears the text in the GUI because I'm lazy to make it auto-scroll
---]]
+-- Whisper Spy UI Script
 
 for i, v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "WhisperSpy" then
@@ -23,11 +17,14 @@ Scroll.BackgroundColor3 = Color3.new(0.337255, 0.337255, 0.337255)
 Scroll.BackgroundTransparency = 0.89999997615814
 Scroll.Position = UDim2.new(0.0159817338, 0, 0.631728053, 0)
 
--- Increased Size for the window
-Scroll.Size = UDim2.new(0, 600, 0, 350)  -- Width = 600, Height = 350
-
+-- Increased Size for the window (Larger Box)
+Scroll.Size = UDim2.new(0, 600, 0, 400)  -- Width = 600, Height = 400 (adjusted height)
 Scroll.CanvasPosition = Vector2.new(0, 484)
+Scroll.CanvasSize = UDim2.new(0, 0, 1, 0)
 Scroll.ScrollBarThickness = 10
+
+-- Make the scroll bar always visible when content exceeds
+Scroll.ScrollBarVisibility = Enum.ScrollBarVisibility.Auto
 
 -- Create draggable functionality
 local dragging = false
@@ -64,7 +61,6 @@ function SCRIPT_KTFX73_FAKESCRIPT()
 
     local textnumber = 1
     local prevOutputPos = 0
-    local maxMessages = 100 -- Max messages before scroll
 
     -- Output message function
     function output(plr, msg)
@@ -85,8 +81,8 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.Name = textnumber
         textnumber = textnumber + 1
         o.Text = plr.Name .. ": " .. msg
-        o.Size = UDim2.new(0.95, 0, .02, 0)
-        o.Position = UDim2.new(0, 0, .02 + prevOutputPos, 0)
+        o.Size = UDim2.new(0.95, 0, .05, 0)  -- Increased size for each message
+        o.Position = UDim2.new(0, 0, .05 + prevOutputPos, 0)  -- Adjust position for better spacing
         o.Font = Enum.Font.SourceSansBold
         o.TextColor3 = colour
         o.TextStrokeTransparency = 0
@@ -94,14 +90,14 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.BackgroundColor3 = Color3.new(0, 0, 0)
         o.BorderSizePixel = 0
         o.BorderColor3 = Color3.new(0, 0, 0)
-        o.FontSize = "Size14"
+        o.FontSize = Enum.FontSize.Size14  -- Set text size to be smaller
         o.TextXAlignment = Enum.TextXAlignment.Left
         o.ClipsDescendants = true
-        prevOutputPos = prevOutputPos + 0.025
+        prevOutputPos = prevOutputPos + 0.05  -- Adjust spacing between messages
 
-        -- Adjust CanvasSize dynamically
-        local canvasHeight = prevOutputPos * 30  -- Adjust the canvas height based on number of messages
-        Scroll.CanvasSize = UDim2.new(0, 0, 0, canvasHeight)
+        -- Dynamically adjust CanvasSize after each message to create infinite scroll
+        local newHeight = prevOutputPos * 30  -- Adjust multiplier for proper spacing
+        Scroll.CanvasSize = UDim2.new(0, 0, 0, newHeight)
 
         -- Auto-scroll to the bottom every time a message is added
         Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
