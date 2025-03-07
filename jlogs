@@ -1,11 +1,4 @@
---[[ 
-Made by dollar#0007
-
-Logs all whispers and hidden chats with a UI
-Usage: +w, +e, +t, +team, +console, +whisper.
-+clear - clears the text in the GUI because I'm lazy to make it auto-scroll
---]]
-
+-- Existing code to create the UI
 for i, v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "WhisperSpy" then
         v:Destroy()
@@ -96,8 +89,16 @@ function SCRIPT_KTFX73_FAKESCRIPT()
         o.ClipsDescendants = true
         prevOutputPos = prevOutputPos + 0.025
 
-        -- Auto-scroll to the bottom every time a message is added
-        Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
+        -- Function to check if the chat is at the bottom and scroll
+        local function scrollToBottom()
+            local isAtBottom = Scroll.CanvasPosition.Y + Scroll.AbsoluteSize.Y >= Scroll.CanvasSize.Y.Offset
+            if isAtBottom then
+                Scroll.CanvasPosition = Vector2.new(0, Scroll.CanvasSize.Y.Offset)
+            end
+        end
+
+        -- Auto-scroll to the bottom if user is at the bottom of the chat
+        scrollToBottom()
     end
 
     -- Listen to player's chat messages
@@ -125,6 +126,30 @@ function SCRIPT_KTFX73_FAKESCRIPT()
                     v:Destroy()
                     textnumber = 1
                 end
+            end
+        end
+    end)
+
+    -- Create a button to execute /clear command
+    local clearButton = Instance.new("TextButton")
+    clearButton.Parent = ScreenGui
+    clearButton.Name = "ClearButton"
+    clearButton.Text = "Clear Chat"
+    clearButton.Size = UDim2.new(0, 120, 0, 50)
+    clearButton.Position = UDim2.new(0.5, -60, 0.9, 0)  -- Positioning the button at the bottom
+    clearButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    clearButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    clearButton.Font = Enum.Font.SourceSans
+    clearButton.FontSize = Enum.FontSize.Size18
+
+    -- Button click event to trigger /clear
+    clearButton.MouseButton1Click:Connect(function()
+        -- Trigger the same logic as /clear
+        for i, v in pairs(Scroll:GetChildren()) do
+            if v:IsA("TextLabel") then
+                prevOutputPos = 0
+                v:Destroy()
+                textnumber = 1
             end
         end
     end)
